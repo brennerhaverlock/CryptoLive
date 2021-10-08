@@ -28,16 +28,15 @@ function refreshTicker(tickerdata) {
 		const newRow = tblBTCbody.insertRow(rowCnt);
 		const cell1 = newRow.insertCell(0);
 		const cell2 = newRow.insertCell(1);
-		// const cell3 = newRow.insertCell(2);
-		// const cell4 = newRow.insertCell(3);
-		// const cell5 = newRow.insertCell(4);
+		const cell3 = newRow.insertCell(2);
+		const cell4 = newRow.insertCell(3);
+		const cell5 = newRow.insertCell(4);
 		cell1.innerHTML = printCurrency(item.target);
 		cell1.setAttribute('data-currency', item.target);
 		cell2.innerHTML = item.price;
 		cell3.innerHTML = item.volume;
 		cell4.innerHTML = item.change;
 		cell5.innerHTML = '<span id="sparkline-' + item.target +'"></span>';
-		drawSparkline(item.target, item.price);
 		rowCnt++;
 	});
 
@@ -54,8 +53,8 @@ function formatDate() {
 function printCurrency(currency) {
 	switch(currency) {
 		case 'USD':
-			return '<span class="currency">$</span>';
-		case 'GBP':
+            return '<span class="currency">$</span>';
+        case 'GBP':
 			return '<span class="currency">&pound;</span>';
 		case 'EUR':
 			return '<span class="currency">&euro;</span>';
