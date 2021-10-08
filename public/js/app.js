@@ -1,15 +1,24 @@
 const socket = io();
 
 const usdArr = [];
+const gbpArr = [];
+const eurArr = [];
+const jpyArr = [];
 
 
-socket.on('crypto-prices', tickerdata => {
-	refreshTicker(tickerdata);
+socket.on('btc-prices', tickerdata => {
+    refreshBTCTicker(tickerdata);
+});
+
+socket.on('eth-prices', tickerdata => {
+    refreshETHTicker(tickerdata);
 });
 
 
-function refreshTicker(tickerdata) {
-	const tblBTC = document.getElementById("btc-ticker");
+function refreshBTCTicker(tickerdata) {
+    const tblBTC = document.getElementById("btc-ticker");
+    
+
 	const tblRow = tblBTC.getElementsByTagName("tr");
 	let rowCnt = 0;
 
@@ -36,11 +45,44 @@ function refreshTicker(tickerdata) {
 		cell2.innerHTML = item.price;
 		cell3.innerHTML = item.volume;
 		cell4.innerHTML = item.change;
-		cell5.innerHTML = '<span id="sparkline-' + item.target +'"></span>';
+		rowCnt++;
+	});
+}
+
+
+function refreshETHTicker(tickerdata) {
+    const tblETH = document.getElementById("eth-ticker");
+    
+
+	const tblRow = tblETH.getElementsByTagName("tr");
+	let rowCnt = 0;
+
+	tickerdata.map((item) => {
+		for (let i = 0; i < tblRow.length; i++) {
+			const tblCol = tblRow[i].getElementsByTagName("td")[0];
+      if (tblCol) {
+				const txtValue = tblCol.getAttribute('data-currency');
+        if (txtValue === '' || txtValue === item.target) {
+          tblETH.deleteRow(i);
+        }
+      }   
+		}
+
+		const tblETHbody = document.getElementById('eth-ticker').getElementsByTagName('tbody')[0];
+		const newRow = tblETHbody.insertRow(rowCnt);
+		const cell1 = newRow.insertCell(0);
+		const cell2 = newRow.insertCell(1);
+		const cell3 = newRow.insertCell(2);
+		const cell4 = newRow.insertCell(3);
+		const cell5 = newRow.insertCell(4);
+		cell1.innerHTML = printCurrency(item.target);
+		cell1.setAttribute('data-currency', item.target);
+		cell2.innerHTML = item.price;
+		cell3.innerHTML = item.volume;
+		cell4.innerHTML = item.change;
 		rowCnt++;
 	});
 
-	tapeTicker(tickerdata);
 }
 
 function formatDate() {

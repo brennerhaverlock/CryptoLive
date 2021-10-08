@@ -3,6 +3,10 @@ body {
     background-color: #000000
 }
 
+h1 {
+    color: white;
+}
+
 section {
 	max-width: 750px;
     margin: auto;

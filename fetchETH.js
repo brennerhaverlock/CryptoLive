@@ -2,20 +2,20 @@ const request = require('request');
 
 exports.pushUpdates = function() {
 	return new Promise(function (resolve, reject) {
-		let btcArr = [];
+		let ethArr = [];
 		fetchAPI('https://api.cryptonator.com/api/ticker/eth-usd')
 		.then(function (res1) {
-			btcArr.push(JSON.parse(res1).ticker);
+			ethArr.push(JSON.parse(res1).ticker);
 			return fetchAPI('https://api.cryptonator.com/api/ticker/eth-gbp')
 		}).then(function (res2) {
-			btcArr.push(JSON.parse(res2).ticker);
+			ethArr.push(JSON.parse(res2).ticker);
 			return fetchAPI('https://api.cryptonator.com/api/ticker/eth-eur')
 		}).then(function (res3) {
-			btcArr.push(JSON.parse(res3).ticker);
+			ethArr.push(JSON.parse(res3).ticker);
 			return fetchAPI('https://api.cryptonator.com/api/ticker/eth-jpy')
 		}).then(function (res4) {
-			btcArr.push(JSON.parse(res4).ticker);
-			resolve(btcArr);
+			ethArr.push(JSON.parse(res4).ticker);
+			resolve(ethArr);
 		});
 	});
 }

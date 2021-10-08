@@ -3,7 +3,10 @@ const path = require('path');
 const os = require('os');
 const express = require('express');
 const socketio = require('socket.io');
-const fetchbtc = require('./fetchbtc')
+
+const fetchbtc = require('./fetchbtc');
+const fetcheth = require('./fetchETH');
+const fetchdoge = require('./fetchDOGE');
 
 
 const app = express();
@@ -19,8 +22,18 @@ io.on('connection', socket => {
 	console.log('Client connected');
 
 	setInterval( async () => {
-		socket.emit('crypto-prices', await fetchbtc.pushUpdates().catch(err => { console.log(err) }));
-	}, 5000);
+        socket.emit('btc-prices', await fetchbtc.pushUpdates().catch(err => { console.log(err) }));
+    }, 5000);
+
+    setInterval( async () => {
+        socket.emit('eth-prices', await fetcheth.pushUpdates().catch(err => { console.log(err) }));
+    }, 5000);
+
+    setInterval( async () => {
+        socket.emit('doge-prices', await fetchdoge.pushUpdates().catch(err => { console.log(err) }));
+    }, 5000);
+    
+
 })
 
 server.listen(PORT, () => console.log(`CryptoLive server running on port ${PORT}`));
