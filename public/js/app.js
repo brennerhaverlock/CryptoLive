@@ -24,7 +24,7 @@ function refreshTicker(tickerdata) {
       }   
 		}
 
-		const tblBTCbody = document.getElementById('btct-icker').getElementsByTagName('tbody')[0];
+		const tblBTCbody = document.getElementById('btc-ticker').getElementsByTagName('tbody')[0];
 		const newRow = tblBTCbody.insertRow(rowCnt);
 		const cell1 = newRow.insertCell(0);
 		const cell2 = newRow.insertCell(1);
@@ -42,5 +42,25 @@ function refreshTicker(tickerdata) {
 	});
 
 	tapeTicker(tickerdata);
+}
+
+function formatDate() {
+	const date = new Date();
+	const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+	const [{ value: mn },,{ value: day },,{ value: yr},,{ value: hr},,{ value: min},,{ value: sec}] = dateTimeFormat.formatToParts(date);
+	return `${day}-${mn}-${yr} ${hr}:${min}:${sec}`;
+}
+
+function printCurrency(currency) {
+	switch(currency) {
+		case 'USD':
+			return '<span class="currency">$</span>';
+		case 'GBP':
+			return '<span class="currency">&pound;</span>';
+		case 'EUR':
+			return '<span class="currency">&euro;</span>';
+		case 'JPY':
+			return '<span class="currency">&yen;</span>';
+	}
 }
 
